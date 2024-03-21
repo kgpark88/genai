@@ -249,7 +249,7 @@
         "inputAnchors": [],
         "inputs": {
           "autofixParser": "",
-          "jsonStructure": "[{\"property\":\"positive\",\"type\":\"boolean\",\"description\":\"the review is positive\",\"actions\":\"\",\"id\":0}]"
+          "jsonStructure": "[{\"property\":\"setiment\",\"type\":\"boolean\",\"description\":\"the sentence is positive\",\"actions\":\"\",\"id\":0}]"
         },
         "outputAnchors": [
           {
@@ -264,7 +264,7 @@
         "selected": false
       },
       "width": 300,
-      "height": 328,
+      "height": 330,
       "selected": false,
       "positionAbsolute": {
         "x": -1080.3844129750037,
