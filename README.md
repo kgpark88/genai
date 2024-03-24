@@ -1,2 +1,1 @@
-# 생성형 AI로 AI애플리케이션 개발하기
-
+# All About Gen AI
