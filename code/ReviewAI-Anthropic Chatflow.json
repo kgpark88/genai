@@ -1,0 +1,1239 @@
+{
+  "nodes": [
+    {
+      "id": "llmChain_0",
+      "position": {
+        "x": 663.0859326625548,
+        "y": -1117.4390152105084
+      },
+      "type": "customNode",
+      "data": {
+        "id": "llmChain_0",
+        "label": "LLM Chain",
+        "version": 3,
+        "name": "llmChain",
+        "type": "LLMChain",
+        "baseClasses": [
+          "LLMChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "Chain to run queries against LLMs",
+        "inputParams": [
+          {
+            "label": "Chain Name",
+            "name": "chainName",
+            "type": "string",
+            "placeholder": "Name Your Chain",
+            "optional": true,
+            "id": "llmChain_0-input-chainName-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Language Model",
+            "name": "model",
+            "type": "BaseLanguageModel",
+            "id": "llmChain_0-input-model-BaseLanguageModel"
+          },
+          {
+            "label": "Prompt",
+            "name": "prompt",
+            "type": "BasePromptTemplate",
+            "id": "llmChain_0-input-prompt-BasePromptTemplate"
+          },
+          {
+            "label": "Output Parser",
+            "name": "outputParser",
+            "type": "BaseLLMOutputParser",
+            "optional": true,
+            "id": "llmChain_0-input-outputParser-BaseLLMOutputParser"
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "llmChain_0-input-inputModeration-Moderation"
+          }
+        ],
+        "inputs": {
+          "model": "{{chatAnthropic_0.data.instance}}",
+          "prompt": "{{promptTemplate_1.data.instance}}",
+          "outputParser": "",
+          "inputModeration": "",
+          "chainName": "positive"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "llmChain_0-output-llmChain-LLMChain|BaseChain|Runnable",
+                "name": "llmChain",
+                "label": "LLM Chain",
+                "description": "",
+                "type": "LLMChain | BaseChain | Runnable"
+              },
+              {
+                "id": "llmChain_0-output-outputPrediction-string|json",
+                "name": "outputPrediction",
+                "label": "Output Prediction",
+                "description": "",
+                "type": "string | json"
+              }
+            ],
+            "default": "llmChain"
+          }
+        ],
+        "outputs": {
+          "output": "llmChain"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 507,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 663.0859326625548,
+        "y": -1117.4390152105084
+      },
+      "dragging": false
+    },
+    {
+      "id": "promptTemplate_0",
+      "position": {
+        "x": -1420.0398191374309,
+        "y": -1174.1063889495676
+      },
+      "type": "customNode",
+      "data": {
+        "id": "promptTemplate_0",
+        "label": "Prompt Template",
+        "version": 1,
+        "name": "promptTemplate",
+        "type": "PromptTemplate",
+        "baseClasses": [
+          "PromptTemplate",
+          "BaseStringPromptTemplate",
+          "BasePromptTemplate",
+          "Runnable"
+        ],
+        "category": "Prompts",
+        "description": "Schema to represent a basic prompt for an LLM",
+        "inputParams": [
+          {
+            "label": "Template",
+            "name": "template",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "What is a good name for a company that makes {product}?",
+            "id": "promptTemplate_0-input-template-string"
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "promptTemplate_0-input-promptValues-json"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "template": "Determine if the following sentence is positive or negative:\n{sentence}",
+          "promptValues": "{\"sentence\":\"{{question}}\"}"
+        },
+        "outputAnchors": [
+          {
+            "id": "promptTemplate_0-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable",
+            "name": "promptTemplate",
+            "label": "PromptTemplate",
+            "description": "Schema to represent a basic prompt for an LLM",
+            "type": "PromptTemplate | BaseStringPromptTemplate | BasePromptTemplate | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 511,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": -1420.0398191374309,
+        "y": -1174.1063889495676
+      }
+    },
+    {
+      "id": "structuredOutputParser_0",
+      "position": {
+        "x": -1080.3844129750037,
+        "y": -606.7184985071472
+      },
+      "type": "customNode",
+      "data": {
+        "id": "structuredOutputParser_0",
+        "label": "Structured Output Parser",
+        "version": 1,
+        "name": "structuredOutputParser",
+        "type": "StructuredOutputParser",
+        "baseClasses": [
+          "StructuredOutputParser",
+          "BaseLLMOutputParser",
+          "Runnable"
+        ],
+        "category": "Output Parsers",
+        "description": "Parse the output of an LLM call into a given (JSON) structure.",
+        "inputParams": [
+          {
+            "label": "Autofix",
+            "name": "autofixParser",
+            "type": "boolean",
+            "optional": true,
+            "description": "In the event that the first call fails, will make another call to the model to fix any errors.",
+            "id": "structuredOutputParser_0-input-autofixParser-boolean"
+          },
+          {
+            "label": "JSON Structure",
+            "name": "jsonStructure",
+            "type": "datagrid",
+            "description": "JSON structure for LLM to return",
+            "datagrid": [
+              {
+                "field": "property",
+                "headerName": "Property",
+                "editable": true
+              },
+              {
+                "field": "type",
+                "headerName": "Type",
+                "type": "singleSelect",
+                "valueOptions": [
+                  "string",
+                  "number",
+                  "boolean"
+                ],
+                "editable": true
+              },
+              {
+                "field": "description",
+                "headerName": "Description",
+                "editable": true,
+                "flex": 1
+              }
+            ],
+            "default": [
+              {
+                "property": "answer",
+                "type": "string",
+                "description": "answer to the user's question"
+              },
+              {
+                "property": "source",
+                "type": "string",
+                "description": "sources used to answer the question, should be websites"
+              }
+            ],
+            "additionalParams": true,
+            "id": "structuredOutputParser_0-input-jsonStructure-datagrid"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "autofixParser": "",
+          "jsonStructure": "[{\"property\":\"positive\",\"type\":\"boolean\",\"description\":\"the review is positive\",\"actions\":\"\",\"id\":0}]"
+        },
+        "outputAnchors": [
+          {
+            "id": "structuredOutputParser_0-output-structuredOutputParser-StructuredOutputParser|BaseLLMOutputParser|Runnable",
+            "name": "structuredOutputParser",
+            "label": "StructuredOutputParser",
+            "description": "Parse the output of an LLM call into a given (JSON) structure.",
+            "type": "StructuredOutputParser | BaseLLMOutputParser | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 328,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -1080.3844129750037,
+        "y": -606.7184985071472
+      },
+      "dragging": false
+    },
+    {
+      "id": "llmChain_1",
+      "position": {
+        "x": 666.6446618921831,
+        "y": -596.001117174921
+      },
+      "type": "customNode",
+      "data": {
+        "id": "llmChain_1",
+        "label": "LLM Chain",
+        "version": 3,
+        "name": "llmChain",
+        "type": "LLMChain",
+        "baseClasses": [
+          "LLMChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "Chain to run queries against LLMs",
+        "inputParams": [
+          {
+            "label": "Chain Name",
+            "name": "chainName",
+            "type": "string",
+            "placeholder": "Name Your Chain",
+            "optional": true,
+            "id": "llmChain_1-input-chainName-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Language Model",
+            "name": "model",
+            "type": "BaseLanguageModel",
+            "id": "llmChain_1-input-model-BaseLanguageModel"
+          },
+          {
+            "label": "Prompt",
+            "name": "prompt",
+            "type": "BasePromptTemplate",
+            "id": "llmChain_1-input-prompt-BasePromptTemplate"
+          },
+          {
+            "label": "Output Parser",
+            "name": "outputParser",
+            "type": "BaseLLMOutputParser",
+            "optional": true,
+            "id": "llmChain_1-input-outputParser-BaseLLMOutputParser"
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "llmChain_1-input-inputModeration-Moderation"
+          }
+        ],
+        "inputs": {
+          "model": "{{chatAnthropic_1.data.instance}}",
+          "prompt": "{{promptTemplate_2.data.instance}}",
+          "outputParser": "",
+          "inputModeration": "",
+          "chainName": "negative"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "llmChain_1-output-llmChain-LLMChain|BaseChain|Runnable",
+                "name": "llmChain",
+                "label": "LLM Chain",
+                "description": "",
+                "type": "LLMChain | BaseChain | Runnable"
+              },
+              {
+                "id": "llmChain_1-output-outputPrediction-string|json",
+                "name": "outputPrediction",
+                "label": "Output Prediction",
+                "description": "",
+                "type": "string | json"
+              }
+            ],
+            "default": "llmChain"
+          }
+        ],
+        "outputs": {
+          "output": "llmChain"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 507,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 666.6446618921831,
+        "y": -596.001117174921
+      },
+      "dragging": false
+    },
+    {
+      "id": "promptTemplate_1",
+      "position": {
+        "x": -98.99644581659028,
+        "y": -1303.1827160033026
+      },
+      "type": "customNode",
+      "data": {
+        "id": "promptTemplate_1",
+        "label": "Prompt Template",
+        "version": 1,
+        "name": "promptTemplate",
+        "type": "PromptTemplate",
+        "baseClasses": [
+          "PromptTemplate",
+          "BaseStringPromptTemplate",
+          "BasePromptTemplate",
+          "Runnable"
+        ],
+        "category": "Prompts",
+        "description": "Schema to represent a basic prompt for an LLM",
+        "inputParams": [
+          {
+            "label": "Template",
+            "name": "template",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "What is a good name for a company that makes {product}?",
+            "id": "promptTemplate_1-input-template-string"
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "promptTemplate_1-input-promptValues-json"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "template": "당신은 고객 지원 도우미입니다. \n먼저 고객에게 리뷰에 대해 감사 인사를 전한 다음 \n웹사이트에 리뷰를 게시할 것인지 고객에게 문의합니다.\n또한, 리뷰를 요약합니다:\n{review}\n",
+          "promptValues": "{}"
+        },
+        "outputAnchors": [
+          {
+            "id": "promptTemplate_1-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable",
+            "name": "promptTemplate",
+            "label": "PromptTemplate",
+            "description": "Schema to represent a basic prompt for an LLM",
+            "type": "PromptTemplate | BaseStringPromptTemplate | BasePromptTemplate | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 511,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": -98.99644581659028,
+        "y": -1303.1827160033026
+      }
+    },
+    {
+      "id": "promptTemplate_2",
+      "position": {
+        "x": -44.39112304279226,
+        "y": -426.25159900055235
+      },
+      "type": "customNode",
+      "data": {
+        "id": "promptTemplate_2",
+        "label": "Prompt Template",
+        "version": 1,
+        "name": "promptTemplate",
+        "type": "PromptTemplate",
+        "baseClasses": [
+          "PromptTemplate",
+          "BaseStringPromptTemplate",
+          "BasePromptTemplate",
+          "Runnable"
+        ],
+        "category": "Prompts",
+        "description": "Schema to represent a basic prompt for an LLM",
+        "inputParams": [
+          {
+            "label": "Template",
+            "name": "template",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "What is a good name for a company that makes {product}?",
+            "id": "promptTemplate_2-input-template-string"
+          },
+          {
+            "label": "Format Prompt Values",
+            "name": "promptValues",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "promptTemplate_2-input-promptValues-json"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "template": "당신은 부정적인 리뷰를 처리하는 고객 지원 도우미입니다.\n다음 리뷰에 대한 사과문을 작성하고 사용자에게 고객 서비스 담당자에게 연락을 받고 싶은지를 문의합니다.\n리뷰 : {review}\n",
+          "promptValues": "{}"
+        },
+        "outputAnchors": [
+          {
+            "id": "promptTemplate_2-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable",
+            "name": "promptTemplate",
+            "label": "PromptTemplate",
+            "description": "Schema to represent a basic prompt for an LLM",
+            "type": "PromptTemplate | BaseStringPromptTemplate | BasePromptTemplate | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 511,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": -44.39112304279226,
+        "y": -426.25159900055235
+      }
+    },
+    {
+      "id": "llmChain_2",
+      "position": {
+        "x": -744.4527202565695,
+        "y": -811.5961024871783
+      },
+      "type": "customNode",
+      "data": {
+        "id": "llmChain_2",
+        "label": "LLM Chain",
+        "version": 3,
+        "name": "llmChain",
+        "type": "LLMChain",
+        "baseClasses": [
+          "LLMChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "Chain to run queries against LLMs",
+        "inputParams": [
+          {
+            "label": "Chain Name",
+            "name": "chainName",
+            "type": "string",
+            "placeholder": "Name Your Chain",
+            "optional": true,
+            "id": "llmChain_2-input-chainName-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Language Model",
+            "name": "model",
+            "type": "BaseLanguageModel",
+            "id": "llmChain_2-input-model-BaseLanguageModel"
+          },
+          {
+            "label": "Prompt",
+            "name": "prompt",
+            "type": "BasePromptTemplate",
+            "id": "llmChain_2-input-prompt-BasePromptTemplate"
+          },
+          {
+            "label": "Output Parser",
+            "name": "outputParser",
+            "type": "BaseLLMOutputParser",
+            "optional": true,
+            "id": "llmChain_2-input-outputParser-BaseLLMOutputParser"
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "llmChain_2-input-inputModeration-Moderation"
+          }
+        ],
+        "inputs": {
+          "model": "{{cohere_0.data.instance}}",
+          "prompt": "{{promptTemplate_0.data.instance}}",
+          "outputParser": "{{structuredOutputParser_0.data.instance}}",
+          "inputModeration": "",
+          "chainName": "setiment"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "llmChain_2-output-llmChain-LLMChain|BaseChain|Runnable",
+                "name": "llmChain",
+                "label": "LLM Chain",
+                "description": "",
+                "type": "LLMChain | BaseChain | Runnable"
+              },
+              {
+                "id": "llmChain_2-output-outputPrediction-string|json",
+                "name": "outputPrediction",
+                "label": "Output Prediction",
+                "description": "",
+                "type": "string | json"
+              }
+            ],
+            "default": "llmChain"
+          }
+        ],
+        "outputs": {
+          "output": "outputPrediction"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 507,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -744.4527202565695,
+        "y": -811.5961024871783
+      },
+      "dragging": false
+    },
+    {
+      "id": "ifElseFunction_0",
+      "position": {
+        "x": -408.01267076121286,
+        "y": -1089.4973348239732
+      },
+      "type": "customNode",
+      "data": {
+        "id": "ifElseFunction_0",
+        "label": "IfElse Function",
+        "version": 1,
+        "name": "ifElseFunction",
+        "type": "IfElseFunction",
+        "baseClasses": [
+          "IfElseFunction",
+          "Utilities"
+        ],
+        "category": "Utilities",
+        "description": "Split flows based on If Else javascript functions",
+        "inputParams": [
+          {
+            "label": "Input Variables",
+            "name": "functionInputVariables",
+            "description": "Input variables can be used in the function with prefix $. For example: $var",
+            "type": "json",
+            "optional": true,
+            "acceptVariable": true,
+            "list": true,
+            "id": "ifElseFunction_0-input-functionInputVariables-json"
+          },
+          {
+            "label": "IfElse Name",
+            "name": "functionName",
+            "type": "string",
+            "optional": true,
+            "placeholder": "If Condition Match",
+            "id": "ifElseFunction_0-input-functionName-string"
+          },
+          {
+            "label": "If Function",
+            "name": "ifFunction",
+            "description": "Function must return a value",
+            "type": "code",
+            "rows": 2,
+            "default": "if (\"hello\" == \"hello\") {\n    return true;\n}",
+            "id": "ifElseFunction_0-input-ifFunction-code"
+          },
+          {
+            "label": "Else Function",
+            "name": "elseFunction",
+            "description": "Function must return a value",
+            "type": "code",
+            "rows": 2,
+            "default": "return false;",
+            "id": "ifElseFunction_0-input-elseFunction-code"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "functionInputVariables": "{\"sentiment\":\"{{llmChain_2.data.instance}}\"}",
+          "functionName": "",
+          "ifFunction": "if ($sentiment.positive == true) {\n    return true;\n}",
+          "elseFunction": "return false;"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "ifElseFunction_0-output-returnTrue-string|number|boolean|json|array",
+                "name": "returnTrue",
+                "label": "True",
+                "description": "",
+                "type": "string | number | boolean | json | array"
+              },
+              {
+                "id": "ifElseFunction_0-output-returnFalse-string|number|boolean|json|array",
+                "name": "returnFalse",
+                "label": "False",
+                "description": "",
+                "type": "string | number | boolean | json | array"
+              }
+            ],
+            "default": "returnTrue"
+          }
+        ],
+        "outputs": {
+          "output": "returnTrue"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 755,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -408.01267076121286,
+        "y": -1089.4973348239732
+      },
+      "dragging": false
+    },
+    {
+      "id": "cohere_0",
+      "position": {
+        "x": -1097.652908988585,
+        "y": -1323.5166518514652
+      },
+      "type": "customNode",
+      "data": {
+        "id": "cohere_0",
+        "label": "Cohere",
+        "version": 2,
+        "name": "cohere",
+        "type": "Cohere",
+        "baseClasses": [
+          "Cohere",
+          "LLM",
+          "BaseLLM",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "LLMs",
+        "description": "Wrapper around Cohere large language models",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "cohereApi"
+            ],
+            "id": "cohere_0-input-credential-credential"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "options",
+            "options": [
+              {
+                "label": "command",
+                "name": "command"
+              },
+              {
+                "label": "command-light",
+                "name": "command-light"
+              },
+              {
+                "label": "command-nightly",
+                "name": "command-nightly"
+              },
+              {
+                "label": "command-light-nightly",
+                "name": "command-light-nightly"
+              },
+              {
+                "label": "base",
+                "name": "base"
+              },
+              {
+                "label": "base-light",
+                "name": "base-light"
+              }
+            ],
+            "default": "command",
+            "optional": true,
+            "id": "cohere_0-input-modelName-options"
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.7,
+            "optional": true,
+            "id": "cohere_0-input-temperature-number"
+          },
+          {
+            "label": "Max Tokens",
+            "name": "maxTokens",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "id": "cohere_0-input-maxTokens-number"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "cohere_0-input-cache-BaseCache"
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "command",
+          "temperature": 0.7,
+          "maxTokens": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "cohere_0-output-cohere-Cohere|LLM|BaseLLM|BaseLanguageModel|Runnable",
+            "name": "cohere",
+            "label": "Cohere",
+            "description": "Wrapper around Cohere large language models",
+            "type": "Cohere | LLM | BaseLLM | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 621,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": -1097.652908988585,
+        "y": -1323.5166518514652
+      }
+    },
+    {
+      "id": "chatAnthropic_0",
+      "position": {
+        "x": 290.8807565387963,
+        "y": -1236.1860974440744
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatAnthropic_0",
+        "label": "ChatAnthropic",
+        "version": 5,
+        "name": "chatAnthropic",
+        "type": "ChatAnthropic",
+        "baseClasses": [
+          "ChatAnthropic",
+          "ChatAnthropicMessages",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around ChatAnthropic large language models that use the Chat endpoint",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "anthropicApi"
+            ],
+            "id": "chatAnthropic_0-input-credential-credential"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "options",
+            "options": [
+              {
+                "label": "claude-3-haiku",
+                "name": "claude-3-haiku-20240307",
+                "description": "Fastest and most compact model, designed for near-instant responsiveness"
+              },
+              {
+                "label": "claude-3-opus",
+                "name": "claude-3-opus-20240229",
+                "description": "Most powerful model for highly complex tasks"
+              },
+              {
+                "label": "claude-3-sonnet",
+                "name": "claude-3-sonnet-20240229",
+                "description": "Ideal balance of intelligence and speed for enterprise workloads"
+              },
+              {
+                "label": "claude-2.0 (legacy)",
+                "name": "claude-2.0",
+                "description": "Claude 2 latest major version, automatically get updates to the model as they are released"
+              },
+              {
+                "label": "claude-2.1 (legacy)",
+                "name": "claude-2.1",
+                "description": "Claude 2 latest full version"
+              },
+              {
+                "label": "claude-instant-1.2 (legacy)",
+                "name": "claude-instant-1.2",
+                "description": "Claude Instant latest major version, automatically get updates to the model as they are released"
+              }
+            ],
+            "default": "claude-3-haiku",
+            "optional": true,
+            "id": "chatAnthropic_0-input-modelName-options"
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatAnthropic_0-input-temperature-number"
+          },
+          {
+            "label": "Max Tokens",
+            "name": "maxTokensToSample",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_0-input-maxTokensToSample-number"
+          },
+          {
+            "label": "Top P",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_0-input-topP-number"
+          },
+          {
+            "label": "Top K",
+            "name": "topK",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_0-input-topK-number"
+          },
+          {
+            "label": "Allow Image Uploads",
+            "name": "allowImageUploads",
+            "type": "boolean",
+            "description": "Automatically uses claude-3-* models when image is being uploaded from chat. Only works with LLMChain, Conversation Chain, ReAct Agent, and Conversational Agent",
+            "default": false,
+            "optional": true,
+            "id": "chatAnthropic_0-input-allowImageUploads-boolean"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatAnthropic_0-input-cache-BaseCache"
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "claude-3-haiku-20240307",
+          "temperature": 0.9,
+          "maxTokensToSample": "",
+          "topP": "",
+          "topK": "",
+          "allowImageUploads": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "chatAnthropic_0-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatAnthropic",
+            "label": "ChatAnthropic",
+            "description": "Wrapper around ChatAnthropic large language models that use the Chat endpoint",
+            "type": "ChatAnthropic | ChatAnthropicMessages | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 671,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 290.8807565387963,
+        "y": -1236.1860974440744
+      },
+      "dragging": false
+    },
+    {
+      "id": "chatAnthropic_1",
+      "position": {
+        "x": 298.8600598935894,
+        "y": -532.9438728225695
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatAnthropic_1",
+        "label": "ChatAnthropic",
+        "version": 5,
+        "name": "chatAnthropic",
+        "type": "ChatAnthropic",
+        "baseClasses": [
+          "ChatAnthropic",
+          "ChatAnthropicMessages",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around ChatAnthropic large language models that use the Chat endpoint",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "anthropicApi"
+            ],
+            "id": "chatAnthropic_1-input-credential-credential"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "options",
+            "options": [
+              {
+                "label": "claude-3-haiku",
+                "name": "claude-3-haiku-20240307",
+                "description": "Fastest and most compact model, designed for near-instant responsiveness"
+              },
+              {
+                "label": "claude-3-opus",
+                "name": "claude-3-opus-20240229",
+                "description": "Most powerful model for highly complex tasks"
+              },
+              {
+                "label": "claude-3-sonnet",
+                "name": "claude-3-sonnet-20240229",
+                "description": "Ideal balance of intelligence and speed for enterprise workloads"
+              },
+              {
+                "label": "claude-2.0 (legacy)",
+                "name": "claude-2.0",
+                "description": "Claude 2 latest major version, automatically get updates to the model as they are released"
+              },
+              {
+                "label": "claude-2.1 (legacy)",
+                "name": "claude-2.1",
+                "description": "Claude 2 latest full version"
+              },
+              {
+                "label": "claude-instant-1.2 (legacy)",
+                "name": "claude-instant-1.2",
+                "description": "Claude Instant latest major version, automatically get updates to the model as they are released"
+              }
+            ],
+            "default": "claude-3-haiku",
+            "optional": true,
+            "id": "chatAnthropic_1-input-modelName-options"
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatAnthropic_1-input-temperature-number"
+          },
+          {
+            "label": "Max Tokens",
+            "name": "maxTokensToSample",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_1-input-maxTokensToSample-number"
+          },
+          {
+            "label": "Top P",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_1-input-topP-number"
+          },
+          {
+            "label": "Top K",
+            "name": "topK",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_1-input-topK-number"
+          },
+          {
+            "label": "Allow Image Uploads",
+            "name": "allowImageUploads",
+            "type": "boolean",
+            "description": "Automatically uses claude-3-* models when image is being uploaded from chat. Only works with LLMChain, Conversation Chain, ReAct Agent, and Conversational Agent",
+            "default": false,
+            "optional": true,
+            "id": "chatAnthropic_1-input-allowImageUploads-boolean"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatAnthropic_1-input-cache-BaseCache"
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "claude-3-haiku-20240307",
+          "temperature": 0.9,
+          "maxTokensToSample": "",
+          "topP": "",
+          "topK": "",
+          "allowImageUploads": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "chatAnthropic_1-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatAnthropic",
+            "label": "ChatAnthropic",
+            "description": "Wrapper around ChatAnthropic large language models that use the Chat endpoint",
+            "type": "ChatAnthropic | ChatAnthropicMessages | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 671,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 298.8600598935894,
+        "y": -532.9438728225695
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "promptTemplate_1",
+      "sourceHandle": "promptTemplate_1-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable",
+      "target": "llmChain_0",
+      "targetHandle": "llmChain_0-input-prompt-BasePromptTemplate",
+      "type": "buttonedge",
+      "id": "promptTemplate_1-promptTemplate_1-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable-llmChain_0-llmChain_0-input-prompt-BasePromptTemplate"
+    },
+    {
+      "source": "promptTemplate_2",
+      "sourceHandle": "promptTemplate_2-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable",
+      "target": "llmChain_1",
+      "targetHandle": "llmChain_1-input-prompt-BasePromptTemplate",
+      "type": "buttonedge",
+      "id": "promptTemplate_2-promptTemplate_2-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable-llmChain_1-llmChain_1-input-prompt-BasePromptTemplate"
+    },
+    {
+      "source": "promptTemplate_0",
+      "sourceHandle": "promptTemplate_0-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable",
+      "target": "llmChain_2",
+      "targetHandle": "llmChain_2-input-prompt-BasePromptTemplate",
+      "type": "buttonedge",
+      "id": "promptTemplate_0-promptTemplate_0-output-promptTemplate-PromptTemplate|BaseStringPromptTemplate|BasePromptTemplate|Runnable-llmChain_2-llmChain_2-input-prompt-BasePromptTemplate"
+    },
+    {
+      "source": "ifElseFunction_0",
+      "sourceHandle": "ifElseFunction_0-output-returnTrue-string|number|boolean|json|array",
+      "target": "promptTemplate_1",
+      "targetHandle": "promptTemplate_1-input-promptValues-json",
+      "type": "buttonedge",
+      "id": "ifElseFunction_0-ifElseFunction_0-output-returnTrue-string|number|boolean|json|array-promptTemplate_1-promptTemplate_1-input-promptValues-json"
+    },
+    {
+      "source": "ifElseFunction_0",
+      "sourceHandle": "ifElseFunction_0-output-returnFalse-string|number|boolean|json|array",
+      "target": "promptTemplate_2",
+      "targetHandle": "promptTemplate_2-input-promptValues-json",
+      "type": "buttonedge",
+      "id": "ifElseFunction_0-ifElseFunction_0-output-returnFalse-string|number|boolean|json|array-promptTemplate_2-promptTemplate_2-input-promptValues-json"
+    },
+    {
+      "source": "llmChain_2",
+      "sourceHandle": "llmChain_2-output-outputPrediction-string|json",
+      "target": "ifElseFunction_0",
+      "targetHandle": "ifElseFunction_0-input-functionInputVariables-json",
+      "type": "buttonedge",
+      "id": "llmChain_2-llmChain_2-output-outputPrediction-string|json-ifElseFunction_0-ifElseFunction_0-input-functionInputVariables-json"
+    },
+    {
+      "source": "structuredOutputParser_0",
+      "sourceHandle": "structuredOutputParser_0-output-structuredOutputParser-StructuredOutputParser|BaseLLMOutputParser|Runnable",
+      "target": "llmChain_2",
+      "targetHandle": "llmChain_2-input-outputParser-BaseLLMOutputParser",
+      "type": "buttonedge",
+      "id": "structuredOutputParser_0-structuredOutputParser_0-output-structuredOutputParser-StructuredOutputParser|BaseLLMOutputParser|Runnable-llmChain_2-llmChain_2-input-outputParser-BaseLLMOutputParser"
+    },
+    {
+      "source": "cohere_0",
+      "sourceHandle": "cohere_0-output-cohere-Cohere|LLM|BaseLLM|BaseLanguageModel|Runnable",
+      "target": "llmChain_2",
+      "targetHandle": "llmChain_2-input-model-BaseLanguageModel",
+      "type": "buttonedge",
+      "id": "cohere_0-cohere_0-output-cohere-Cohere|LLM|BaseLLM|BaseLanguageModel|Runnable-llmChain_2-llmChain_2-input-model-BaseLanguageModel"
+    },
+    {
+      "source": "chatAnthropic_0",
+      "sourceHandle": "chatAnthropic_0-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "llmChain_0",
+      "targetHandle": "llmChain_0-input-model-BaseLanguageModel",
+      "type": "buttonedge",
+      "id": "chatAnthropic_0-chatAnthropic_0-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable-llmChain_0-llmChain_0-input-model-BaseLanguageModel"
+    },
+    {
+      "source": "chatAnthropic_1",
+      "sourceHandle": "chatAnthropic_1-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "llmChain_1",
+      "targetHandle": "llmChain_1-input-model-BaseLanguageModel",
+      "type": "buttonedge",
+      "id": "chatAnthropic_1-chatAnthropic_1-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable-llmChain_1-llmChain_1-input-model-BaseLanguageModel"
+    }
+  ]
+}

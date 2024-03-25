@@ -1,0 +1,504 @@
+{
+  "nodes": [
+    {
+      "id": "conversationChain_0",
+      "position": {
+        "x": 973.1584827076817,
+        "y": -563.724033495828
+      },
+      "type": "customNode",
+      "data": {
+        "id": "conversationChain_0",
+        "label": "Conversation Chain",
+        "version": 3,
+        "name": "conversationChain",
+        "type": "ConversationChain",
+        "baseClasses": [
+          "ConversationChain",
+          "LLMChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "Chat models specific conversational chain with memory",
+        "inputParams": [
+          {
+            "label": "System Message",
+            "name": "systemMessagePrompt",
+            "type": "string",
+            "rows": 4,
+            "description": "If Chat Prompt Template is provided, this will be ignored",
+            "additionalParams": true,
+            "optional": true,
+            "default": "The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know.",
+            "placeholder": "The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know.",
+            "id": "conversationChain_0-input-systemMessagePrompt-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "id": "conversationChain_0-input-model-BaseChatModel"
+          },
+          {
+            "label": "Memory",
+            "name": "memory",
+            "type": "BaseMemory",
+            "id": "conversationChain_0-input-memory-BaseMemory"
+          },
+          {
+            "label": "Chat Prompt Template",
+            "name": "chatPromptTemplate",
+            "type": "ChatPromptTemplate",
+            "description": "Override existing prompt with Chat Prompt Template. Human Message must includes {input} variable",
+            "optional": true,
+            "id": "conversationChain_0-input-chatPromptTemplate-ChatPromptTemplate"
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "conversationChain_0-input-inputModeration-Moderation"
+          }
+        ],
+        "inputs": {
+          "model": "{{chatAnthropic_0.data.instance}}",
+          "memory": "{{upstashRedisBackedChatMemory_0.data.instance}}",
+          "chatPromptTemplate": "",
+          "inputModeration": [
+            "{{inputModerationSimple_0.data.instance}}"
+          ],
+          "systemMessagePrompt": "The following is a friendly conversation between a human and an AI. The AI is talkative and provides lots of specific details from its context. If the AI does not know the answer to a question, it truthfully says it does not know."
+        },
+        "outputAnchors": [
+          {
+            "id": "conversationChain_0-output-conversationChain-ConversationChain|LLMChain|BaseChain|Runnable",
+            "name": "conversationChain",
+            "label": "ConversationChain",
+            "description": "Chat models specific conversational chain with memory",
+            "type": "ConversationChain | LLMChain | BaseChain | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 436,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 973.1584827076817,
+        "y": -563.724033495828
+      },
+      "dragging": false
+    },
+    {
+      "id": "bufferMemory_0",
+      "position": {
+        "x": 284.8206253259527,
+        "y": -110.14693908357359
+      },
+      "type": "customNode",
+      "data": {
+        "id": "bufferMemory_0",
+        "label": "Buffer Memory",
+        "version": 1,
+        "name": "bufferMemory",
+        "type": "BufferMemory",
+        "baseClasses": [
+          "BufferMemory",
+          "BaseChatMemory",
+          "BaseMemory"
+        ],
+        "category": "Memory",
+        "description": "Remembers previous conversational back and forths directly",
+        "inputParams": [
+          {
+            "label": "Memory Key",
+            "name": "memoryKey",
+            "type": "string",
+            "default": "chat_history",
+            "id": "bufferMemory_0-input-memoryKey-string"
+          },
+          {
+            "label": "Input Key",
+            "name": "inputKey",
+            "type": "string",
+            "default": "input",
+            "id": "bufferMemory_0-input-inputKey-string"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "memoryKey": "chat_history",
+          "inputKey": "input"
+        },
+        "outputAnchors": [
+          {
+            "id": "bufferMemory_0-output-bufferMemory-BufferMemory|BaseChatMemory|BaseMemory",
+            "name": "bufferMemory",
+            "label": "BufferMemory",
+            "description": "Remembers previous conversational back and forths directly",
+            "type": "BufferMemory | BaseChatMemory | BaseMemory"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 378,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 284.8206253259527,
+        "y": -110.14693908357359
+      },
+      "dragging": false
+    },
+    {
+      "id": "inputModerationSimple_0",
+      "position": {
+        "x": -45.60738337059719,
+        "y": -564.272754899504
+      },
+      "type": "customNode",
+      "data": {
+        "id": "inputModerationSimple_0",
+        "label": "Simple Prompt Moderation",
+        "version": 2,
+        "name": "inputModerationSimple",
+        "type": "Moderation",
+        "baseClasses": [
+          "Moderation"
+        ],
+        "category": "Moderation",
+        "description": "Check whether input consists of any text from Deny list, and prevent being sent to LLM",
+        "inputParams": [
+          {
+            "label": "Deny List",
+            "name": "denyList",
+            "type": "string",
+            "rows": 4,
+            "placeholder": "ignore previous instructions\ndo not follow the directions\nyou must ignore all previous instructions",
+            "description": "An array of string literals (enter one per line) that should not appear in the prompt text.",
+            "id": "inputModerationSimple_0-input-denyList-string"
+          },
+          {
+            "label": "Error Message",
+            "name": "moderationErrorMessage",
+            "type": "string",
+            "rows": 2,
+            "default": "Cannot Process! Input violates content moderation policies.",
+            "optional": true,
+            "id": "inputModerationSimple_0-input-moderationErrorMessage-string"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "description": "Use LLM to detect if the input is similar to those specified in Deny List",
+            "optional": true,
+            "id": "inputModerationSimple_0-input-model-BaseChatModel"
+          }
+        ],
+        "inputs": {
+          "denyList": "나쁜 강아지",
+          "model": "",
+          "moderationErrorMessage": "Cannot Process! Input violates content moderation policies."
+        },
+        "outputAnchors": [
+          {
+            "id": "inputModerationSimple_0-output-inputModerationSimple-Moderation",
+            "name": "inputModerationSimple",
+            "label": "Moderation",
+            "description": "Check whether input consists of any text from Deny list, and prevent being sent to LLM",
+            "type": "Moderation"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 585,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -45.60738337059719,
+        "y": -564.272754899504
+      },
+      "dragging": false
+    },
+    {
+      "id": "upstashRedisBackedChatMemory_0",
+      "position": {
+        "x": 284.6401718484307,
+        "y": -562.9184828702454
+      },
+      "type": "customNode",
+      "data": {
+        "id": "upstashRedisBackedChatMemory_0",
+        "label": "Upstash Redis-Backed Chat Memory",
+        "version": 1,
+        "name": "upstashRedisBackedChatMemory",
+        "type": "UpstashRedisBackedChatMemory",
+        "baseClasses": [
+          "UpstashRedisBackedChatMemory",
+          "BaseChatMemory",
+          "BaseMemory"
+        ],
+        "category": "Memory",
+        "description": "Summarizes the conversation and stores the memory in Upstash Redis server",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "description": "Configure password authentication on your upstash redis instance",
+            "credentialNames": [
+              "upstashRedisMemoryApi"
+            ],
+            "id": "upstashRedisBackedChatMemory_0-input-credential-credential"
+          },
+          {
+            "label": "Upstash Redis REST URL",
+            "name": "baseURL",
+            "type": "string",
+            "placeholder": "https://<your-url>.upstash.io",
+            "id": "upstashRedisBackedChatMemory_0-input-baseURL-string"
+          },
+          {
+            "label": "Session Id",
+            "name": "sessionId",
+            "type": "string",
+            "description": "If not specified, a random id will be used. Learn <a target=\"_blank\" href=\"https://docs.flowiseai.com/memory/long-term-memory#ui-and-embedded-chat\">more</a>",
+            "default": "",
+            "additionalParams": true,
+            "optional": true,
+            "id": "upstashRedisBackedChatMemory_0-input-sessionId-string"
+          },
+          {
+            "label": "Session Timeouts",
+            "name": "sessionTTL",
+            "type": "number",
+            "description": "Omit this parameter to make sessions never expire",
+            "additionalParams": true,
+            "optional": true,
+            "id": "upstashRedisBackedChatMemory_0-input-sessionTTL-number"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "baseURL": "https://us1-equal-tuna-40994.upstash.io",
+          "sessionId": "chat001",
+          "sessionTTL": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "upstashRedisBackedChatMemory_0-output-upstashRedisBackedChatMemory-UpstashRedisBackedChatMemory|BaseChatMemory|BaseMemory",
+            "name": "upstashRedisBackedChatMemory",
+            "label": "UpstashRedisBackedChatMemory",
+            "description": "Summarizes the conversation and stores the memory in Upstash Redis server",
+            "type": "UpstashRedisBackedChatMemory | BaseChatMemory | BaseMemory"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 430,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 284.6401718484307,
+        "y": -562.9184828702454
+      },
+      "dragging": false
+    },
+    {
+      "id": "chatAnthropic_0",
+      "position": {
+        "x": 617.6081656415405,
+        "y": -570.8292026602076
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatAnthropic_0",
+        "label": "ChatAnthropic",
+        "version": 5,
+        "name": "chatAnthropic",
+        "type": "ChatAnthropic",
+        "baseClasses": [
+          "ChatAnthropic",
+          "ChatAnthropicMessages",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around ChatAnthropic large language models that use the Chat endpoint",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "anthropicApi"
+            ],
+            "id": "chatAnthropic_0-input-credential-credential"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "options",
+            "options": [
+              {
+                "label": "claude-3-haiku",
+                "name": "claude-3-haiku-20240307",
+                "description": "Fastest and most compact model, designed for near-instant responsiveness"
+              },
+              {
+                "label": "claude-3-opus",
+                "name": "claude-3-opus-20240229",
+                "description": "Most powerful model for highly complex tasks"
+              },
+              {
+                "label": "claude-3-sonnet",
+                "name": "claude-3-sonnet-20240229",
+                "description": "Ideal balance of intelligence and speed for enterprise workloads"
+              },
+              {
+                "label": "claude-2.0 (legacy)",
+                "name": "claude-2.0",
+                "description": "Claude 2 latest major version, automatically get updates to the model as they are released"
+              },
+              {
+                "label": "claude-2.1 (legacy)",
+                "name": "claude-2.1",
+                "description": "Claude 2 latest full version"
+              },
+              {
+                "label": "claude-instant-1.2 (legacy)",
+                "name": "claude-instant-1.2",
+                "description": "Claude Instant latest major version, automatically get updates to the model as they are released"
+              }
+            ],
+            "default": "claude-3-haiku",
+            "optional": true,
+            "id": "chatAnthropic_0-input-modelName-options"
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatAnthropic_0-input-temperature-number"
+          },
+          {
+            "label": "Max Tokens",
+            "name": "maxTokensToSample",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_0-input-maxTokensToSample-number"
+          },
+          {
+            "label": "Top P",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_0-input-topP-number"
+          },
+          {
+            "label": "Top K",
+            "name": "topK",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatAnthropic_0-input-topK-number"
+          },
+          {
+            "label": "Allow Image Uploads",
+            "name": "allowImageUploads",
+            "type": "boolean",
+            "description": "Automatically uses claude-3-* models when image is being uploaded from chat. Only works with LLMChain, Conversation Chain, ReAct Agent, and Conversational Agent",
+            "default": false,
+            "optional": true,
+            "id": "chatAnthropic_0-input-allowImageUploads-boolean"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatAnthropic_0-input-cache-BaseCache"
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "claude-3-sonnet-20240229",
+          "temperature": "0",
+          "maxTokensToSample": "",
+          "topP": "",
+          "topK": "",
+          "allowImageUploads": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "chatAnthropic_0-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatAnthropic",
+            "label": "ChatAnthropic",
+            "description": "Wrapper around ChatAnthropic large language models that use the Chat endpoint",
+            "type": "ChatAnthropic | ChatAnthropicMessages | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 673,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 617.6081656415405,
+        "y": -570.8292026602076
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "inputModerationSimple_0",
+      "sourceHandle": "inputModerationSimple_0-output-inputModerationSimple-Moderation",
+      "target": "conversationChain_0",
+      "targetHandle": "conversationChain_0-input-inputModeration-Moderation",
+      "type": "buttonedge",
+      "id": "inputModerationSimple_0-inputModerationSimple_0-output-inputModerationSimple-Moderation-conversationChain_0-conversationChain_0-input-inputModeration-Moderation"
+    },
+    {
+      "source": "upstashRedisBackedChatMemory_0",
+      "sourceHandle": "upstashRedisBackedChatMemory_0-output-upstashRedisBackedChatMemory-UpstashRedisBackedChatMemory|BaseChatMemory|BaseMemory",
+      "target": "conversationChain_0",
+      "targetHandle": "conversationChain_0-input-memory-BaseMemory",
+      "type": "buttonedge",
+      "id": "upstashRedisBackedChatMemory_0-upstashRedisBackedChatMemory_0-output-upstashRedisBackedChatMemory-UpstashRedisBackedChatMemory|BaseChatMemory|BaseMemory-conversationChain_0-conversationChain_0-input-memory-BaseMemory"
+    },
+    {
+      "source": "chatAnthropic_0",
+      "sourceHandle": "chatAnthropic_0-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "conversationChain_0",
+      "targetHandle": "conversationChain_0-input-model-BaseChatModel",
+      "type": "buttonedge",
+      "id": "chatAnthropic_0-chatAnthropic_0-output-chatAnthropic-ChatAnthropic|ChatAnthropicMessages|BaseChatModel|BaseLanguageModel|Runnable-conversationChain_0-conversationChain_0-input-model-BaseChatModel"
+    }
+  ]
+}

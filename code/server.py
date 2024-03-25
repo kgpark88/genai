@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+import os
 from typing import List
-
 from fastapi import FastAPI
+from llama_index.embeddings.voyageai import VoyageEmbedding
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -22,7 +24,16 @@ loader = WebBaseLoader("https://docs.smith.langchain.com/user_guide")
 docs = loader.load()
 text_splitter = RecursiveCharacterTextSplitter()
 documents = text_splitter.split_documents(docs)
-embeddings = OpenAIEmbeddings()
+
+voyage_api_key = os.environ.get(
+    "VOYAGE_API_KEY", "pa-jdSGqKsXLMgpQf3zLEqWmZLKaONv7w_C5U-6mqMc8TU"
+)
+embeddings = VoyageEmbedding(
+    model_name="voyage-2",
+    voyage_api_key=voyage_api_key
+)
+
+# embeddings = OpenAIEmbeddings()
 vector = FAISS.from_documents(documents, embeddings)
 retriever = vector.as_retriever()
 
