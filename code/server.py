@@ -26,7 +26,7 @@ text_splitter = RecursiveCharacterTextSplitter()
 documents = text_splitter.split_documents(docs)
 
 voyage_api_key = os.environ.get(
-    "VOYAGE_API_KEY", "pa-jdSGqKsXLMgpQf3zLEqWmZLKaONv7w_C5U-6mqMc8TU"
+    "VOYAGE_API_KEY", ""
 )
 embeddings = VoyageEmbedding(
     model_name="voyage-2",
