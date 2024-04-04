@@ -1,0 +1,43 @@
+문제 1. 다음 중 생성형 AI(Generative AI)의 정의로 가장 적절한 것은? 
+가. 인간의 지시에 따라 특정 작업을 수행하는 AI 
+나. 데이터로부터 패턴을 학습하고 새로운 콘텐츠를 생성하는 AI
+다. 주어진 규칙에 따라 추론하고 결론을 도출하는 AI 
+라. 센서를 통해 환경을 인식하고 행동하는 AI
+
+정답 : 나
+
+
+문제 2. 생성형 AI(Generative AI) 모델 훈련에 사용되는 대표적인 기술은? 
+가. 규칙 기반 시스템 
+나. 전문가 시스템 
+다. 딥러닝  
+라. 유전 알고리즘
+
+정답 : 다
+
+
+문제 3. LLM은 무엇의 약자인가? 
+가. Long Linguistic Modeling 
+나. Lengthy Lexical Mapping 
+다. Large Language Model 
+라. Linguistic Learning Methodology
+
+정답 : 다
+
+
+문제 4. LLM의 주요 장점은 무엇인가? 
+가. 높은 정확도 
+나. 빠른 처리 속도 
+다. 다양한 작업 수행 능력 
+라. 낮은 비용
+
+정답 : 다
+
+
+문제 5. sLLM은 무엇의 약자인가? 
+가. Super Linguistic Learning Model 
+나. Supervised Large Language Model
+다. Sequence-based Language Modeling 
+라. Small Large Language Model
+
+정답 : 라
